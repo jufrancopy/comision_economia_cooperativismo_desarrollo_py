@@ -271,76 +271,77 @@
         }
 
         /* Botón flotante de Home */
-.floating-home-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
-    transition: all 0.3s ease;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-}
+        .floating-home-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
 
-.floating-home-btn:hover {
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-}
+        .floating-home-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
 
-.floating-home-btn:active {
-    transform: translateY(-2px) scale(1.05);
-}
+        .floating-home-btn:active {
+            transform: translateY(-2px) scale(1.05);
+        }
 
-.floating-home-btn svg {
-    width: 28px;
-    height: 28px;
-    color: white;
-    transition: all 0.3s ease;
-}
+        .floating-home-btn svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+            transition: all 0.3s ease;
+        }
 
-.floating-home-btn:hover svg {
-    transform: scale(1.1);
-}
+        .floating-home-btn:hover svg {
+            transform: scale(1.1);
+        }
 
-/* Animación de aparición */
-@keyframes fadeInFloat {
-    from {
-        opacity: 0;
-        transform: translateY(100px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        /* Animación de aparición */
+        @keyframes fadeInFloat {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
 
-.floating-home-btn {
-    animation: fadeInFloat 0.6s ease-out;
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .floating-home-btn {
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-    }
-    
-    .floating-home-btn svg {
-        width: 24px;
-        height: 24px;
-    }
-}
+        .floating-home-btn {
+            animation: fadeInFloat 0.6s ease-out;
+        }
+
+        /* Responsive float buttom*/
+        @media (max-width: 768px) {
+            .floating-home-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .floating-home-btn svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
     </style>
 </head>
 
