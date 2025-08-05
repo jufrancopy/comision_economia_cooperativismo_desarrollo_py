@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Régimen de Incentivos Fiscales - Paraguay 2025</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+            border-radius: 0 0 40px 40px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .card h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transform: perspective(1000px) rotateX(10deg);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: perspective(1000px) rotateX(0deg) scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 2rem 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            padding: 1rem;
+        }
+
+        /* Benefits List */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .benefit-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit-title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-desc {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 16px;
+            width: 45%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        /* Articles Summary Styles */
+        .chapters-container {
+            margin: 2rem 0;
+        }
+
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .chapter-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.1));
+        }
+
+        .chapter-header {
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .chapter-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .chapter-subtitle {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .articles-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .article-item {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 0.75rem;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            transition: all 0.3s ease;
+        }
+
+        .article-item:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateX(5px);
+        }
+
+        .article-item strong {
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .article-item em {
+            color: #764ba2;
+            font-weight: 600;
+        }
+
+        /* Botón flotante de Home */
+        .floating-home-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .floating-home-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .floating-home-btn:active {
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        .floating-home-btn svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .floating-home-btn:hover svg {
+            transform: scale(1.1);
+        }
+
+        /* Animación de aparición */
+        @keyframes fadeInFloat {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .floating-home-btn {
+            animation: fadeInFloat 0.6s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: row !important;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 40px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+                transform: translateX(-50%);
+            }
+
+            .chapter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chapter-card {
+                margin-bottom: 1rem;
+            }
+
+            .article-item {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .card:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(odd) {
+            animation-delay: 0.4s;
+        }
+
+        /* Responsive float button*/
+        @media (max-width: 768px) {
+            .floating-home-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .floating-home-btn svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Nuevo Régimen de Incentivos Fiscales</h1>
+            <p>Proyecto de Ley para la Inversión Nacional y Extranjera - Paraguay 2025</p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Articles Summary -->
+        <div class="card">
+            <h2>Resumen de Artículos por Capítulos</h2>
+            <div class="chapters-container">
+                <div class="chapter-grid">
+                    <div class="chapter-card">
+                        <div class="chapter-header">
+                            <h3>Capítulo I</h3>
+                            <span class="chapter-subtitle">Objeto y Definiciones</span>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item">
+                                <strong>Art. 1°</strong> - <em>Objeto:</em> Establece el nuevo régimen de incentivos
+                                fiscales para fomentar inversiones nacionales y extranjeras, con objetivos específicos
+                                de incrementar producción, empleo, tecnología, integración productiva y desarrollo de
+                                MIPYMES.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 2°</strong> - <em>Definiciones:</em> Define conceptos clave como
+                                ampliación, bienes de capital, caso fortuito, modernización, nueva actividad y puesta en
+                                marcha.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="chapter-header">
+                            <h3>Capítulo II</h3>
+                            <span class="chapter-subtitle">Beneficios Fiscales</span>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item">
+                                <strong>Art. 3°</strong> - <em>Beneficiarios:</em> Personas jurídicas y empresas
+                                unipersonales, nacionales y extranjeras, legalmente constituidas.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 4°</strong> - <em>Beneficios fiscales:</em> Detalla 7 beneficios incluyendo
+                                exoneración aduanera, IVA, INR, IDU, y beneficios especiales para turismo (US$ 20M
+                                mínimo).
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="chapter-header">
+                            <h3>Capítulo III</h3>
+                            <span class="chapter-subtitle">Consejo de Inversiones</span>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item">
+                                <strong>Art. 5°</strong> - <em>Consejo de Inversiones:</em> Órgano colegiado con 7
+                                miembros (MIC, MEF, MAG, BCP, DNIT, FEPRINCO, UIP).
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 6°</strong> - <em>Atribuciones:</em> 12 funciones principales incluyendo
+                                evaluación, dictamen, monitoreo y recomendaciones.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 7°</strong> - <em>Secretaría Ejecutiva:</em> A cargo del MIC, funciones
+                                técnicas y operativas.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="chapter-header">
+                            <h3>Capítulo IV</h3>
+                            <span class="chapter-subtitle">Proyectos de Inversión</span>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item">
+                                <strong>Art. 8°</strong> - <em>Requisitos mínimos:</em> Ficha técnica con 9 elementos
+                                obligatorios incluyendo beneficiario, descripción, localización, impacto ambiental y
+                                cronograma.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 9°</strong> - <em>Cuadro de inversión:</em> Refleja necesidades actuales y
+                                proyectadas, excluye bienes con más de 6 meses de antigüedad.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 10°</strong> - <em>Monto de inversiones:</em> Incluye activos tangibles,
+                                intangibles y bienes con innovación tecnológica.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 11°</strong> - <em>Plazo para importaciones:</em> Según cronograma en
+                                Resolución Biministerial, prórroga única de 1 año máximo.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="chapter-header">
+                            <h3>Capítulo V</h3>
+                            <span class="chapter-subtitle">Otorgamiento y Renovación</span>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item">
+                                <strong>Art. 12°</strong> - <em>Otorgamiento:</em> Resolución Biministerial basada en
+                                recomendación del Consejo.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 13°</strong> - <em>Plazo:</em> Consejo 60 días, Resolución Biministerial 15
+                                días.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 14°</strong> - <em>Renovación:</em> Máximo 20 años desde primera concesión,
+                                IDU puede extenderse con inversión US$ 13M+.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 15°</strong> - <em>Complementación:</em> Por única vez dentro de 12 meses
+                                de la Resolución original.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="chapter-header">
+                            <h3>Capítulo VI</h3>
+                            <span class="chapter-subtitle">Transferencias</span>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item">
+                                <strong>Art. 16°</strong> - <em>Mantenimiento de titularidad:</em> Mínimo 5 años de
+                                propiedad, pago proporcional después.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 17°</strong> - <em>Transferencia entre beneficiarios:</em> Permitida sin
+                                pago de impuestos con aprobación del Consejo.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 18°</strong> - <em>Transferencia pre-operativa:</em> Antes de puesta en
+                                marcha con aprobación y compromisos del nuevo beneficiario.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="chapter-header">
+                            <h3>Capítulo VII</h3>
+                            <span class="chapter-subtitle">Financiamiento Alternativo</span>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item">
+                                <strong>Art. 19°</strong> - <em>Fiducia de Garantía:</em> Fideicomiso con bienes de
+                                capital, Estado como beneficiario-acreedor, crédito con privilegio especial.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="chapter-header">
+                            <h3>Capítulo VIII</h3>
+                            <span class="chapter-subtitle">Monitoreo y Fiscalización</span>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item">
+                                <strong>Art. 20°</strong> - <em>Informes:</em> Reportes periódicos obligatorios con
+                                carácter de declaración jurada.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 21°</strong> - <em>Monitoreo:</em> Supervisión desde evaluación inicial
+                                hasta ejecución completa.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 22°</strong> - <em>Vigilancia:</em> Sistema dual: in situ (inspecciones
+                                directas) y extra situ (revisión documental).
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 23°</strong> - <em>Controles aleatorios:</em> Sorteos periódicos para
+                                selección de beneficiarios a monitorear.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 24°</strong> - <em>Medidas correctivas:</em> Directrices, recomendaciones y
+                                plazos para subsanar deficiencias.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 25°</strong> - <em>Revocación:</em> 5 causales incluyendo enajenación
+                                indebida, inversión inferior al 50%, uso inadecuado.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 26°</strong> - <em>Créditos privilegiados:</em> Deuda tributaria con
+                                privilegio especial, determinación por DNIT.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="chapter-header">
+                            <h3>Capítulo IX</h3>
+                            <span class="chapter-subtitle">Disposiciones Generales</span>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item">
+                                <strong>Art. 27°</strong> - <em>Registro de bienes:</em> En Cuadro de Depreciación Anual
+                                de Bienes del Activo Fijo.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 28°</strong> - <em>Elegibilidad por antigüedad:</em> Máximo 5 años,
+                                certificación para bienes reacondicionados.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 29°</strong> - <em>Destino de bienes:</em> Uso exclusivo para fines del
+                                proyecto, prohibido uso personal.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 30°</strong> - <em>Arrendamiento:</em> Leasing permitido por 5 años desde
+                                Resolución Biministerial.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 31°</strong> - <em>Oferta nacional:</em> Preferencia a producción nacional
+                                funcionalmente compatible.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chapter-card">
+                        <div class="chapter-header">
+                            <h3>Capítulo X</h3>
+                            <span class="chapter-subtitle">Disposiciones Finales</span>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item">
+                                <strong>Art. 32°</strong> - <em>Actualización:</em> Montos USD actualizables por Decreto
+                                según IPC del BCP.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 33°</strong> - <em>Sujeción legal:</em> Cumplimiento de todas las leyes
+                                vigentes excepto modificaciones específicas.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 34°</strong> - <em>Derogaciones:</em> Deroga Decreto-Ley N° 27/1990 y Ley
+                                N° 60/90.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 35°</strong> - <em>Vigencia proyectos anteriores:</em> Proyectos previos
+                                mantienen régimen original, nuevas solicitudes bajo nueva ley.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 36°</strong> - <em>Reglamentación:</em> Decreto reglamentario en 120 días
+                                máximo.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 37°</strong> - <em>Vigencia:</em> Desde promulgación y publicación.
+                            </div>
+                            <div class="article-item">
+                                <strong>Art. 38°</strong> - <em>Comunicación:</em> Comuníquese al Poder Ejecutivo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="card">
+            <h2>Impacto Histórico del Régimen Actual</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">US$ 10.3B</div>
+                    <div class="stat-label">Inversión Acumulada<br>(1989-2024)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">US$ 329M</div>
+                    <div class="stat-label">Inversión Promedio Anual<br>(Última Década)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">64%</div>
+                    <div class="stat-label">Capital Nacional</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">36%</div>
+                    <div class="stat-label">Capital Extranjero</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investment Distribution Chart -->
+        <div class="card">
+            <h2>Distribución de Inversiones por Origen</h2>
+            <div class="chart-container">
+                <canvas id="investmentChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Benefits Overview -->
+        <div class="card">
+            <h2>Principales Beneficios Fiscales</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-title">Exoneración Aduanera</div>
+                    <div class="benefit-desc">Eliminación total de gravámenes aduaneros e IVA para importación de bienes
+                        de capital</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-title">IVA Compras Locales</div>
+                    <div class="benefit-desc">Exoneración de IVA por compra local de bienes de capital de fabricantes
+                        nacionales</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-title">Remesas al Exterior</div>
+                    <div class="benefit-desc">Exoneración de tributos sobre remesas de intereses y capital (inversión
+                        mín. US$ 13M)</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-title">Dividendos y Utilidades</div>
+                    <div class="benefit-desc">Exoneración total por 10 años de impuestos sobre dividendos (inversión
+                        mín. US$ 13M)</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-title">Transferencia entre Beneficiarios</div>
+                    <div class="benefit-desc">Nueva facilidad para transferir bienes de capital entre empresas del
+                        régimen</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-title">Turismo y Entretenimiento</div>
+                    <div class="benefit-desc">Beneficios especiales para proyectos de gran envergadura (inversión mín.
+                        US$ 20M)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investment Requirements Chart -->
+        <div class="card">
+            <h2>Umbrales de Inversión Requeridos</h2>
+            <div class="chart-container">
+                <canvas id="requirementsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Key Innovations -->
+        <div class="card">
+            <h2>Principales Innovaciones del Nuevo Régimen</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Igualdad Capital Nacional</h3>
+                        <p>Eliminación de distinción entre capital nacional y extranjero para IDU</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Mecanismos de Financiamiento</h3>
+                        <p>Introducción del fideicomiso de garantía como alternativa</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Renovación Limitada</h3>
+                        <p>Límite de 20 años para renovaciones con criterios más estrictos</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Monitoreo Reforzado</h3>
+                        <p>Sistemas de vigilancia in situ y extra situ más rigurosos</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>DNIT en Consejo</h3>
+                        <p>Integración de la Dirección Nacional de Ingresos Tributarios</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Council Composition -->
+        <div class="card">
+            <h2>Composición del Consejo de Inversiones</h2>
+            <div class="chart-container">
+                <canvas id="councilChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Objectives Chart -->
+        <div class="card">
+            <h2>Objetivos Principales de la Ley</h2>
+            <div class="chart-container">
+                <canvas id="objectivesChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón flotante -->
+    <div class="floating-home-btn" onclick="window.location.href='index.html'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9,22 9,12 15,12 15,22" />
+        </svg>
+    </div>
+
+    <script>
+        // Investment Distribution Chart
+        const investmentCtx = document.getElementById('investmentChart').getContext('2d');
+        new Chart(investmentCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Capital Nacional', 'Capital Extranjero'],
+                datasets: [{
+                    data: [64, 36],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(118, 75, 162, 0.8)'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            font: {
+                                size: 14
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Investment Requirements Chart
+        const requirementsCtx = document.getElementById('requirementsChart').getContext('2d');
+        new Chart(requirementsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Beneficios Básicos', 'Remesas + IDU', 'Turismo'],
+                datasets: [{
+                    label: 'Inversión Mínima (USD Millones)',
+                    data: [0, 13, 20],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(118, 75, 162, 0.8)',
+                        'rgba(255, 99, 132, 0.8)'
+                    ],
+                    borderRadius: 8,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'USD Millones'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Council Composition Chart
+        const councilCtx = document.getElementById('councilChart').getContext('2d');
+        new Chart(councilCtx, {
+            type: 'radar',
+            data: {
+                labels: ['MIC', 'MEF', 'MAG', 'BCP', 'DNIT', 'FEPRINCO', 'UIP'],
+                datasets: [{
+                    label: 'Representación en Consejo',
+                    data: [1, 1, 1, 1, 1, 1, 1],
+                    backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(102, 126, 234, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 1,
+                        ticks: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Objectives Chart
+        const objectivesCtx = document.getElementById('objectivesChart').getContext('2d');
+        new Chart(objectivesCtx, {
+            type: 'polarArea',
+            data: {
+                labels: [
+                    'Aumentar Producción',
+                    'Generar Empleo',
+                    'Incorporar Tecnología',
+                    'Integración Productiva',
+                    'Desarrollo MIPYMES'
+                ],
+                datasets: [{
+                    data: [20, 20, 20, 20, 20],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(118, 75, 162, 0.8)',
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 205, 86, 0.8)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    r: {
+                        ticks: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

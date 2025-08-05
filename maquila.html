@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto de Ley - Nuevo Régimen de Maquila Paraguay</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .flag-colors {
+            display: flex;
+            height: 5px;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 20px auto;
+            width: 200px;
+        }
+
+        .flag-red {
+            background: #e74c3c;
+            flex: 1;
+        }
+
+        .flag-white {
+            background: #ffffff;
+            flex: 1;
+        }
+
+        .flag-blue {
+            background: #3498db;
+            flex: 1;
+        }
+
+        .nav-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .nav-pill {
+            background: rgba(255, 255, 255, 0.9);
+            color: #2c3e50;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+        }
+
+        .nav-pill:hover,
+        .nav-pill.active {
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            display: inline-block;
+        }
+
+        .article {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+        .article-title {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .article-content {
+            color: #34495e;
+            text-align: justify;
+        }
+
+        .list-item {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .list-item:before {
+            content: "•";
+            color: #3498db;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .definition-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .definition-item {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .definition-term {
+            font-weight: 600;
+            color: #c0392b;
+            margin-bottom: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .nav-pills {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-pill {
+                width: 200px;
+                text-align: center;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
+
+        /* Botón flotante de Home */
+.floating-home-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.floating-home-btn:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.floating-home-btn:active {
+    transform: translateY(-2px) scale(1.05);
+}
+
+.floating-home-btn svg {
+    width: 28px;
+    height: 28px;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.floating-home-btn:hover svg {
+    transform: scale(1.1);
+}
+
+/* Animación de aparición */
+@keyframes fadeInFloat {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.floating-home-btn {
+    animation: fadeInFloat 0.6s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .floating-home-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .floating-home-btn svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Proyecto de Ley</h1>
+            <p class="subtitle">Del Nuevo Régimen de Maquila</p>
+            <div class="flag-colors">
+                <div class="flag-red"></div>
+                <div class="flag-white"></div>
+                <div class="flag-blue"></div>
+            </div>
+            <p style="color: #7f8c8d; font-style: italic;">República del Paraguay</p>
+        </div>
+
+        <div class="nav-pills">
+            <button class="nav-pill active" onclick="showSection('resumen')">Resumen Ejecutivo</button>
+            <button class="nav-pill" onclick="showSection('objetivos')">Objetivos</button>
+            <button class="nav-pill" onclick="showSection('definiciones')">Definiciones</button>
+            <button class="nav-pill" onclick="showSection('cnime')">CNIME</button>
+            <button class="nav-pill" onclick="showSection('programas')">Programas</button>
+            <button class="nav-pill" onclick="showSection('tributario')">Régimen Tributario</button>
+            <button class="nav-pill" onclick="showSection('sanciones')">Infracciones</button>
+            <button class="nav-pill" onclick="showSection('completo')">Texto Completo</button>
+        </div>
+
+        <!-- Resumen Ejecutivo -->
+        <div id="resumen" class="content-section active">
+            <h2 class="section-title">Resumen Ejecutivo</h2>
+
+            <div class="highlight-box">
+                <h3 style="margin-bottom: 15px;">🎯 Propósito Principal</h3>
+                <p>Esta ley busca modernizar y fortalecer el régimen de maquilas en Paraguay, promoviendo la inversión,
+                    creación de empleos y transferencia de tecnología.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1%</div>
+                    <div class="stat-label">Tributo Único sobre Valor Agregado</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">Años Máximo de Beneficios</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Meses para Iniciar Operaciones</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10%</div>
+                    <div class="stat-label">Máximo Venta Mercado Interno</div>
+                </div>
+            </div>
+
+            <div class="article">
+                <h3 class="article-title">✨ Principales Innovaciones</h3>
+                <div class="article-content">
+                    <div class="list-item">Creación del Consejo Nacional de Industrias Maquiladoras (CNIME)</div>
+                    <div class="list-item">Inclusión de maquila de servicios además de bienes</div>
+                    <div class="list-item">Sistema simplificado de tributo único del 1%</div>
+                    <div class="list-item">Digitalización completa de procesos</div>
+                    <div class="list-item">Modalidades flexibles: pura, capacidad ociosa, albergue</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Objetivos -->
+        <div id="objetivos" class="content-section">
+            <h2 class="section-title">Objetivos y Finalidades</h2>
+
+            <div class="article">
+                <h3 class="article-title">🎯 Prioridades Nacionales</h3>
+                <div class="article-content">
+                    <div class="list-item">Crear fuentes de empleo formal y de calidad</div>
+                    <div class="list-item">Impulsar el aumento de la exportación de bienes y servicios con valor
+                        agregado nacional</div>
+                    <div class="list-item">Promover la inversión de capitales nacionales y extranjeros</div>
+                    <div class="list-item">Contribuir a una mayor integración industrial y elevar la competitividad
+                        internacional</div>
+                    <div class="list-item">Promover la transferencia de conocimientos y tecnología</div>
+                    <div class="list-item">Promover la apertura de mercados internacionales, enfatizando PyMEs</div>
+                    <div class="list-item">Lograr la máxima integración de materias primas e insumos nacionales</div>
+                    <div class="list-item">Fortalecer la balanza comercial</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3 style="margin-bottom: 15px;">🌟 Enfoque Estratégico</h3>
+                <p>Los beneficios se destinan a sectores estratégicos que respondan a los lineamientos establecidos en
+                    la reglamentación, en coherencia con los objetivos de crecimiento y desarrollo del país.</p>
+            </div>
+        </div>
+
+        <!-- Definiciones -->
+        <div id="definiciones" class="content-section">
+            <h2 class="section-title">Definiciones Clave</h2>
+
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Buscar definición..."
+                    onkeyup="filterDefinitions()">
+            </div>
+
+            <div class="definition-grid" id="definitions-container">
+                <div class="definition-item" data-term="maquila">
+                    <div class="definition-term">Maquila</div>
+                    <div>Proceso industrial de bienes o servicios realizado por una empresa constituida en Paraguay, en
+                        virtud de un Contrato de Maquila, con el objeto de transformar, elaborar, ensamblar o reparar
+                        bienes de procedencia extranjera importados temporalmente.</div>
+                </div>
+
+                <div class="definition-item" data-term="maquiladora">
+                    <div class="definition-term">Maquiladora</div>
+                    <div>Empresa establecida especialmente para llevar a cabo Programas de Maquila de exportación de
+                        bienes o servicios o aquella ya establecida que cuente con capacidad ociosa en sus
+                        instalaciones.</div>
+                </div>
+
+                <div class="definition-item" data-term="matriz">
+                    <div class="definition-term">Matriz</div>
+                    <div>Empresa domiciliada en el exterior que contrata procesos industriales o de servicios a ser
+                        desarrollados por una maquiladora constituida conforme a la presente ley.</div>
+                </div>
+
+                <div class="definition-item" data-term="programa">
+                    <div class="definition-term">Programa de Maquila</div>
+                    <div>Instrumento que contiene en detalle la descripción y características del proceso industrial o
+                        de servicios que pretende llevar a cabo la maquiladora, información sobre empleos, valor
+                        agregado, mermas y desperdicios.</div>
+                </div>
+
+                <div class="definition-item" data-term="servicios">
+                    <div class="definition-term">Maquila de Servicios</div>
+                    <div>Régimen en virtud del cual una Maquiladora utiliza su capacidad instalada y procesos para
+                        prestar servicios para empresa extranjera, incorporando valor agregado nacional mediante
+                        tecnologías de información y comunicación.</div>
+                </div>
+
+                <div class="definition-item" data-term="submaquila">
+                    <div class="definition-term">Submaquila</div>
+                    <div>Tercerización de parte del proceso productivo con una empresa nacional que, para el efecto,
+                        deberá contar con un Programa de Submaquila aprobado.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CNIME -->
+        <div id="cnime" class="content-section">
+            <h2 class="section-title">Consejo Nacional de Industrias Maquiladoras (CNIME)</h2>
+
+            <div class="article">
+                <h3 class="article-title">🏛️ Integración del Consejo</h3>
+                <div class="article-content">
+                    <div class="list-item">Representante del Ministerio de Industria y Comercio (Presidente)</div>
+                    <div class="list-item">Representante del Ministerio de Economía y Finanzas</div>
+                    <div class="list-item">Representante del Banco Central del Paraguay</div>
+                    <div class="list-item">Representante del Ministerio de Relaciones Exteriores</div>
+                    <div class="list-item">Representante de la Dirección Nacional de Ingresos Tributarios</div>
+                </div>
+            </div>
+
+            <div class="article">
+                <h3 class="article-title">⚙️ Principales Funciones</h3>
+                <div class="article-content">
+                    <div class="list-item">Formular y evaluar lineamientos generales de políticas maquiladoras</div>
+                    <div class="list-item">Evaluar y emitir opinión sobre Programas de Maquila</div>
+                    <div class="list-item">Recomendar aprobación, rechazo, suspensión o cancelación de programas</div>
+                    <div class="list-item">Cumplir y hacer cumplir la ley y reglamentaciones</div>
+                    <div class="list-item">Delegar competencias operativas a la Secretaría Ejecutiva</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3 style="margin-bottom: 15px;">🏢 Secretaría Ejecutiva</h3>
+                <p>Órgano encargado de la correcta aplicación y ejecución de la ley. Se constituye como unidad
+                    administrativa dependiente del CNIME en el Ministerio de Industria y Comercio, con amplias
+                    facultades operativas, de supervisión y control.</p>
+            </div>
+        </div>
+
+        <!-- Programas -->
+        <div id="programas" class="content-section">
+            <h2 class="section-title">Programas de Maquila</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">180</div>
+                    <div class="stat-label">Días para presentar Contrato con carta de intención</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Meses máximo para iniciar operaciones</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Meses máximo permanencia materias primas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24</div>
+                    <div class="stat-label">Meses máximo de suspensión</div>
+                </div>
+            </div>
+
+            <div class="article">
+                <h3 class="article-title">📋 Tipos de Programas</h3>
+                <div class="article-content">
+                    <div class="list-item"><strong>Maquiladora Pura:</strong> Realiza exclusivamente procesos para
+                        exportación bajo el Régimen de Maquila</div>
+                    <div class="list-item"><strong>Maquiladora por Capacidad Ociosa:</strong> Empresa establecida para
+                        mercado nacional que aprovecha capacidad instalada no utilizada</div>
+                    <div class="list-item"><strong>Maquiladora Albergue (Shelter):</strong> Empresas a las que un
+                        proveedor extranjero facilita tecnología y material productivo</div>
+                </div>
+            </div>
+
+            <div class="article">
+                <h3 class="article-title">📦 Bienes Susceptibles de Importación Temporal</h3>
+                <div class="article-content">
+                    <div class="list-item">Materias primas, bienes intermedios, partes, componentes y materiales
+                        auxiliares</div>
+                    <div class="list-item">Contenedores y cajas de tráileres</div>
+                    <div class="list-item">Maquinarias, aparatos, instrumentos y refacciones para el proceso productivo
+                    </div>
+                    <div class="list-item">Herramientas, equipos de seguridad industrial y productos para higiene</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Régimen Tributario -->
+        <div id="tributario" class="content-section">
+            <h2 class="section-title">Régimen Tributario</h2>
+
+            <div class="highlight-box">
+                <h3 style="margin-bottom: 15px;">💰 Tributo Único de Maquila: 1%</h3>
+                <p>Se aplica sobre el valor agregado en territorio nacional o el valor de la factura de exportación, el
+                    que resultare mayor.</p>
+            </div>
+
+            <div class="article">
+                <h3 class="article-title">🧮 Componentes del Valor Agregado Nacional</h3>
+                <div class="article-content">
+                    <div class="list-item">Bienes adquiridos en territorio nacional para cumplir con el Contrato</div>
+                    <div class="list-item">Servicios contratados en el país</div>
+                    <div class="list-item">Sueldos, salarios y remuneraciones pagados en el país (incluidos aportes
+                        sociales)</div>
+                    <div class="list-item">Depreciación de bienes de capital propiedad de la maquiladora</div>
+                    <div class="list-item">Remuneraciones percibidas como contraprestación de servicios de Maquila</div>
+                </div>
+            </div>
+
+            <div class="article">
+                <h3 class="article-title">🆓 Exoneraciones</h3>
+                <div class="article-content">
+                    <div class="list-item">Importación de bienes previstos en el Contrato de Maquila</div>
+                    <div class="list-item">Reexportación de bienes importados</div>
+                    <div class="list-item">Exportación de bienes transformados, elaborados o ensamblados</div>
+                    <div class="list-item">Impuesto a la Renta Empresarial (IRE) por rentas del Programa de Maquila
+                    </div>
+                    <div class="list-item">Devolución del crédito fiscal del IVA para exportadores</div>
+                </div>
+            </div>
+
+            <div class="article">
+                <h3 class="article-title">🔄 Devolución IVA para Maquiladoras de Servicios</h3>
+                <div class="article-content">
+                    <p>Limitada a un monto máximo de hasta el 0,5% sobre el valor agregado en territorio nacional o
+                        sobre el valor de la factura de exportación, el que resultare mayor. Excluye honorarios
+                        profesionales.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Infracciones y Sanciones -->
+        <div id="sanciones" class="content-section">
+            <h2 class="section-title">Infracciones y Sanciones</h2>
+
+            <div class="article">
+                <h3 class="article-title">⚠️ Tipos de Infracciones</h3>
+                <div class="article-content">
+                    <div class="list-item">Utilizar bienes para fin distinto del declarado en el Programa</div>
+                    <div class="list-item">Realizar actos con inobservancia de condiciones básicas establecidas</div>
+                    <div class="list-item">Comercializar en mercado local sin autorización y nacionalización</div>
+                    <div class="list-item">Realizar actos sin previa aprobación cuando sea requerida</div>
+                    <div class="list-item">Impedir verificación de representantes de la Secretaría Ejecutiva</div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">100</div>
+                    <div class="stat-label">Salarios mínimos multa máxima (uso indebido)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">80</div>
+                    <div class="stat-label">Salarios mínimos (inobservancia condiciones)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">60</div>
+                    <div class="stat-label">Salarios mínimos (actos sin autorización)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Meses máximo suspensión por reiteración</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3 style="margin-bottom: 15px;">⚖️ Debido Proceso</h3>
+                <p>Las sanciones solo pueden aplicarse previo sumario administrativo garantizando el derecho a la
+                    defensa. El procedimiento debe adecuarse a la Ley N° 6715/2021 "De Procedimientos Administrativos".
+                </p>
+            </div>
+        </div>
+
+        <!-- Texto Completo -->
+        <div id="completo" class="content-section">
+            <h2 class="section-title">Texto Completo de la Ley</h2>
+
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Buscar en el texto completo..."
+                    onkeyup="searchFullText()">
+            </div>
+
+            <div id="full-text-content"
+                style="background: #f8f9fa; padding: 20px; border-radius: 10px; font-family: 'Georgia', serif; font-size: 14px; line-height: 1.6; max-height: 600px; overflow-y: auto; border: 1px solid #dee2e6;">
+                <div
+                    style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #3498db;">
+                    <h3 style="color: #2c3e50; margin: 0;">Proyecto de Ley N° ______</h3>
+                    <h2 style="color: #e74c3c; margin: 10px 0;">DEL NUEVO RÉGIMEN DE MAQUILA</h2>
+                    <p style="color: #7f8c8d; font-style: italic; margin: 0;">EL CONGRESO DE LA NACIÓN PARAGUAYA
+                        SANCIONA CON FUERZA DE LEY</p>
+                </div>
+
+                <div style="text-align: justify; color: #2c3e50;">
+                    <h4 style="color: #3498db; border-bottom: 1px solid #3498db; padding-bottom: 5px;">CAPÍTULO I - DE
+                        LA MAQUILA</h4>
+
+                    <p><strong>Art. 1°.- Objeto.</strong></p>
+                    <p>Esta ley tiene por objeto promover el establecimiento y regular las operaciones de empresas que
+                        se dediquen total o parcialmente a realizar actividades de Maquila de exportación, en ejecución
+                        de un contrato suscrito con una empresa domiciliada en el extranjero, incorporando mano de obra
+                        y recursos nacionales.</p>
+
+                    <p>Los beneficios que se otorguen al amparo de esta ley serán destinados a sectores estratégicos que
+                        deberán responder a los lineamientos establecidos en la reglamentación de la presente ley, en
+                        coherencia con los objetivos de crecimiento y desarrollo del país.</p>
+
+                    <p><strong>Art. 2°.- Finalidad.</strong></p>
+                    <p>El régimen previsto en la presente ley se encuentra orientado a la atención de las siguientes
+                        prioridades nacionales:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Crear fuentes de empleo formal y de calidad.</li>
+                        <li>Impulsar el aumento de la exportación de bienes y de servicios con valor agregado nacional.
+                        </li>
+                        <li>Promover la inversión de capitales nacionales y extranjeros.</li>
+                        <li>Contribuir a una mayor integración industrial y coadyuvar a elevar la competitividad
+                            internacional de la industria nacional.</li>
+                        <li>Promover la transferencia de conocimientos con el fin de incrementar la competitividad
+                            internacional de los bienes y servicios brindados desde el Paraguay.</li>
+                        <li>Promover la apertura de mercados internacionales, enfatizando a las pequeñas y medianas
+                            empresas como eje de la política nacional.</li>
+                        <li>Impulsar el desarrollo y la transferencia de tecnología al país.</li>
+                        <li>Lograr la máxima integración al sistema de las materias primas e insumos nacionales.</li>
+                        <li>Fortalecer la balanza comercial.</li>
+                    </ul>
+
+                    <p><strong>Art. 3°.- Definiciones.</strong></p>
+                    <p>Para los efectos de la presente ley se entenderá por:</p>
+
+                    <div
+                        style="background: #ecf0f1; padding: 15px; margin: 10px 0; border-left: 4px solid #3498db; border-radius: 5px;">
+                        <p><strong>• Maquila:</strong> Proceso industrial de bienes o de servicios realizado por una
+                            empresa constituida en el territorio paraguayo, en virtud de un Contrato de Maquila, con el
+                            objeto de transformar, elaborar, ensamblar o reparar bienes de procedencia extranjera
+                            importados temporalmente, destinados a su reexportación, o prestar servicios a ser
+                            aprovechados en el exterior, incorporando mano de obra y otros recursos nacionales.</p>
+
+                        <p><strong>• Servicios:</strong> Se entenderá a los servicios como la prestación de una
+                            actividad o un conjunto de actividades realizadas por la empresa titular de un Programa de
+                            Maquila en favor de un usuario o cliente que no se encuentre presente ni radicado en el
+                            territorio nacional.</p>
+
+                        <p><strong>• Maquiladora:</strong> Empresa establecida especialmente para llevar a cabo
+                            Programas de Maquila de exportación de bienes o servicios o aquella ya establecida y
+                            orientada al mercado nacional, que cuente con capacidad ociosa en sus instalaciones y que le
+                            sea aprobado un Programa de Maquila de bienes o de servicios.</p>
+
+                        <p><strong>• Matriz:</strong> Empresa domiciliada en el exterior que contrata procesos
+                            industriales o de servicios a ser desarrollados por una maquiladora constituida conforme a
+                            la presente ley.</p>
+                    </div>
+
+                    <div
+                        style="text-align: center; margin: 30px 0; padding: 20px; background: linear-gradient(135deg, #f39c12, #e67e22); color: white; border-radius: 10px;">
+                        <p style="margin: 0; font-size: 16px; font-weight: bold;">📖 Texto Completo Disponible</p>
+                        <p style="margin: 10px 0 0 0; font-size: 14px;">Esta es una vista previa. El documento completo
+                            contiene 44 artículos distribuidos en 12 capítulos.</p>
+                    </div>
+
+                    <h4 style="color: #3498db; border-bottom: 1px solid #3498db; padding-bottom: 5px;">CAPÍTULOS
+                        INCLUIDOS:</h4>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin: 20px 0;">
+                        <div
+                            style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #e74c3c;">
+                            <strong>I.</strong> De la Maquila<br>
+                            <strong>II.</strong> Del Consejo Nacional de las Industrias Maquiladoras<br>
+                            <strong>III.</strong> De los Programas de Maquila<br>
+                            <strong>IV.</strong> De las Importaciones
+                        </div>
+                        <div
+                            style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #27ae60;">
+                            <strong>V.</strong> De las Exportaciones<br>
+                            <strong>VI.</strong> De las Obligaciones de las Empresas Maquiladoras<br>
+                            <strong>VII.</strong> Ventas en el Mercado Interno<br>
+                            <strong>VIII.</strong> Disposiciones Generales
+                        </div>
+                        <div
+                            style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #9b59b6;">
+                            <strong>IX.</strong> De las Infracciones y Sanciones<br>
+                            <strong>X.</strong> Del Régimen Tributario<br>
+                            <strong>XI.</strong> De la Simplificación de Trámites<br>
+                            <strong>XII.</strong> Disposiciones Transitorias y Finales
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; text-align: center;">
+                <button onclick="downloadPDF()"
+                    style="background: #e74c3c; color: white; padding: 15px 30px; border: none; border-radius: 25px; font-size: 16px; cursor: pointer; transition: all 0.3s ease;">
+                    📄 Descargar PDF Completo
+                </button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 República del Paraguay - Proyecto de Ley del Nuevo Régimen de Maquila</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Documento desarrollado para facilitar la comprensión de la
+                normativa propuesta</p>
+        </div>
+    </div>
+
+    <!-- Botón flotante -->
+    <div class="floating-home-btn" onclick="window.location.href='index.html'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9,22 9,12 15,12 15,22" />
+        </svg>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all nav pills
+            const navPills = document.querySelectorAll('.nav-pill');
+            navPills.forEach(pill => {
+                pill.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Add active class to clicked nav pill
+            event.target.classList.add('active');
+        }
+
+        function filterDefinitions() {
+            const searchTerm = event.target.value.toLowerCase();
+            const definitions = document.querySelectorAll('.definition-item');
+
+            definitions.forEach(def => {
+                const term = def.getAttribute('data-term').toLowerCase();
+                const content = def.textContent.toLowerCase();
+
+                if (term.includes(searchTerm) || content.includes(searchTerm)) {
+                    def.style.display = 'block';
+                } else {
+                    def.style.display = 'none';
+                }
+            });
+        }
+
+        function searchFullText() {
+            const searchTerm = event.target.value.toLowerCase();
+            const fullTextDiv = document.getElementById('full-text-content');
+            const originalText = fullTextDiv.textContent;
+
+            if (searchTerm === '') {
+                fullTextDiv.innerHTML = originalText;
+                return;
+            }
+
+            // Simple highlight functionality
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            const highlightedText = originalText.replace(regex, '<mark style="background: yellow; padding: 2px;">$1</mark>');
+            fullTextDiv.innerHTML = highlightedText;
+        }
+
+        function downloadPDF() {
+            alert('Funcionalidad de descarga PDF - En una implementación real, esto generaría y descargaría el PDF del documento completo.');
+        }
+
+        // Add smooth scrolling animation
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize with first section
+            showSection('resumen');
+
+            // Add floating effect to stat cards
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.style.animation = 'float 3s ease-in-out infinite';
+            });
+        });
+
+        // Add floating animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+            }
+            
+            .stat-card:hover {
+                transform: translateY(-5px) scale(1.05);
+                transition: all 0.3s ease;
+            }
+            
+            mark {
+                background: linear-gradient(120deg, #a8e6cf 0%, #dcedc1 100%);
+                padding: 2px 4px;
+                border-radius: 3px;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add loading animation for sections
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all nav pills
+            const navPills = document.querySelectorAll('.nav-pill');
+            navPills.forEach(pill => {
+                pill.classList.remove('active');
+            });
+
+            // Show selected section with animation
+            const targetSection = document.getElementById(sectionId);
+            targetSection.classList.add('active');
+
+            // Add active class to clicked nav pill
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                // For programmatic calls, find the corresponding nav pill
+                const navPill = Array.from(navPills).find(pill =>
+                    pill.onclick && pill.onclick.toString().includes(sectionId)
+                );
+                if (navPill) navPill.classList.add('active');
+            }
+
+            // Scroll to top of section smoothly
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
